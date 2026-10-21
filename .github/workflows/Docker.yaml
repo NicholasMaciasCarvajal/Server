@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Importar Checkout
-        uses: actions/checkout
+        uses: actions/checkout@v4
 
       - name: Lint A
         uses: hadolint/hadolint-action@v3.4.0
