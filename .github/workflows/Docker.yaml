@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  construir:
+  revisar:
     name: Lint
     runs-on: ubuntu-latest
 
@@ -20,3 +20,13 @@ jobs:
         uses: hadolint/hadolint-action@v3.4.0
         with:
           dockerfile: Dockerfile
+
+  construir:
+    name: construir
+    needs: revisar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: construir Imagen
+        uses: action/checkout@v4
+        run: docker build -t etiqueta.
