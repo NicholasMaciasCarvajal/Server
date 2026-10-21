@@ -1,1 +1,23 @@
+name: Builder Imagen
 
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  construir:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Importar Checkout
+        uses: actions/checkout
+
+      - name: Lint A
+        uses: hadolint/hadolint-action@v3.4.0
+        with:
+          dockerfile: Dockerfile
+          
