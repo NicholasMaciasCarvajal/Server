@@ -25,7 +25,7 @@ jobs:
             DL4006
 
   construir:
-    name: Construir Imangen
+    name: Construir Imagen
     needs: revisar
     runs-on: ubuntu-latest
 
