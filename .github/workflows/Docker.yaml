@@ -2,7 +2,9 @@ name: Builder Imagen
 
 on:
   push:
-    branches: [main]
+    tags:
+      - "v*"
+    #branches: [main]
 
 permissions:
   contents: read
@@ -44,5 +46,5 @@ jobs:
         with:
           context: .
           push:  true
-          tags:  ghcr.io/nicholasmaciascarvajal/minecraft-server:latest
+          tags:  ghcr.io/nicholasmaciascarvajal/minecraft-server:${{github.ref_name}}
         
