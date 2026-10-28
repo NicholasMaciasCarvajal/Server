@@ -6,7 +6,8 @@ on:
 
 permissions:
   contents: read
-
+  packages: write
+  
 jobs:
   revisar:
     name: Lint
