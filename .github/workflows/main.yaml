@@ -22,7 +22,7 @@ jobs:
           dockerfile: Dockerfile
           ignore:  DL3008, DL4006
   
-  construir:
+  construir-linux:
     needs: revisar
     runs-on: ubuntu-22.04 #linux
 
@@ -39,47 +39,77 @@ jobs:
       - name: Subir imagen
         uses: actions/upload-artifact@v7
         with:
-          name:  imagen-docker
-          path:  servidor.tar
+          name: imagen-docker-linux
+          path: servidor.tar
           compression-level: 0
 
-  importar-windows:
-    runs-on: windows-latest #Windows
+  construir-windows:
+    needs: revisar
+    runs-on: windows-latest #windows
+    
+    steps:
+      - name: Descargar Repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen en Windows
+        shell: pwsh
+        run: docker build -t servidor-minecraft:latest .
+
+      - name: Exportar imagen
+        shell: pwsh
+        run: docker save servidor-minecraft:latest -o servidor-win.tar 
+
+      - name: Subir imagen
+        uses: actions/upload-artifact@v7
+        with:
+          name: imagen-docker-windows
+          path: servidor-win.tar
+          compression-level: 0
+
+  importar-linux:
+    runs-on: ubuntu-latest #linux
     needs: construir
 
     steps:
       - name: Descargar artifact
         uses: actions/download-artifact@v8
         with:
-          name: imagen-docker
-
-      - name: Verificar Imagen
-        shell: pwsh
-        run:  Get-Item servidor.tar
+          name: imagen-docker-linux
 
       - name: Cargar imagen de docker
-        shell: pwsh
         run: docker load -i servidor.tar
 
       - name: Verificar importacion
-        shell: pwsh
-        run:  |
+        run: |
           docker images
-          docker inspect minecraft-server:latest
+          docker inspect servidor-minecraft:latest
+
+  importar-windows:
+    runs-on: windows-latest #Windows
+    needs: construir-windows
+
+    steps:
+      - name: Descargar artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: imagen-docker-windows
+
+      - name: Verificar Imagen
+        shell: pwsh
+        run: Get-Item servidor-win.tar
+
+      - name: Cargar imagen de docker
+        shell: pwsh
+        run: docker load -i servidor-win.tar
+
+      - name: Verificar importacion
+        shell: pwsh
+        run: |
+          docker images
+          docker inspect servidor-minecraft:latest
+
+
+
+
+
           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
