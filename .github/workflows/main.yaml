@@ -68,7 +68,7 @@ jobs:
 
   importar-linux:
     runs-on: ubuntu-latest #linux
-    needs: construir
+    needs: construir-linux
 
     steps:
       - name: Descargar artifact
