@@ -24,7 +24,7 @@ jobs:
   
   construir-linux:
     needs: revisar
-    runs-on: ubuntu-22.04 #linux
+    runs-on: Linux #linux
 
     steps:
       - name: Descargar Repositorio
@@ -67,7 +67,7 @@ jobs:
           compression-level: 0
 
   importar-linux:
-    runs-on: ubuntu-latest #linux
+    runs-on: Linux #linux
     needs: construir-linux
 
     steps:
