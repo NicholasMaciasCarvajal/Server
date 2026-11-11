@@ -45,7 +45,7 @@ jobs:
 
   construir-windows:
     needs: revisar
-    runs-on: windows-latest #windows
+    runs-on: Windows #windows
     
     steps:
       - name: Descargar Repositorio
@@ -85,7 +85,7 @@ jobs:
           docker inspect servidor-minecraft:latest
 
   importar-windows:
-    runs-on: windows-latest #Windows
+    runs-on: Windows #Windows
     needs: construir-windows
 
     steps:
